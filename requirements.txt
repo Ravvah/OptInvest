@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+numpy
+requests
+yfinance
+streamlit
+scikit-learn
+python-dotenv
