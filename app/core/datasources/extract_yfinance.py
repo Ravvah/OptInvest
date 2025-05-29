@@ -1,0 +1,1 @@
+# TODO: Implémenter la logique d'extraction des données depuis Yahoo Finance
