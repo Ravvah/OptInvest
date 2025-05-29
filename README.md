@@ -36,6 +36,13 @@ uv add -r requirements.txt
 ```
 
 
+5. run the api back-end
+
+```bash
+python -m app.api.main
+```
+
+
 
 
 

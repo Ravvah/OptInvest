@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.api.routers import health, simulation
 
+from app.api.routers import health, simulation
 
 app = FastAPI(title="OPTINVEST API", version="0.1.0")
 
