@@ -16,8 +16,3 @@ dependencies = [
     "uvicorn>=0.34.2",
     "yfinance>=0.2.61",
 ]
-[tool.black]
-target-version = "py311"
-
-[tool.isort]
-profile = "black"

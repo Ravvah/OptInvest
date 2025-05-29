@@ -7,4 +7,3 @@ yfinance
 streamlit
 scikit-learn
 python-dotenv
-pre-commit
