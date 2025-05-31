@@ -30,7 +30,17 @@ async def simuler_portefeuille(params: SimulationRequest) -> SimulationResponse:
     - **rendement_total** : gain net en euros.  
     - **timeline** : dict « date ISO → valeur du portefeuille ».
     """
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Moteur de simulation non encore disponible.",
+    # raise HTTPException(
+    #     status_code=status.HTTP_501_NOT_IMPLEMENTED,
+    #     detail="Moteur de simulation non encore disponible.",
+    # )
+    # retourner une réponse fictive pour l'instant
+    return SimulationResponse(
+        cagr=0.05,
+        rendement_total=5000.0,
+        timeline={
+            "2023-01-01": 10000.0,
+            "2024-01-01": 10500.0,
+            "2025-01-01": 11025.0,
+        }
     )
