@@ -8,13 +8,13 @@ OptInvest est une application d'analyse et de simulation de stratégies d'invest
 
 1. Clone le projet depuis GitHub
 
-2. Installe uv
+2. Installez uv
 
 ```bash
 pip install uv
 ```
 
-3. Crée et active l'environnement virtuel
+3. Creez et activez l'environnement virtuel
 
 ```bash
 uv venv
@@ -24,7 +24,7 @@ uv venv
 source .venv/bin/activate
 ```
 
-4. Installe les dépendances dans l'environnement virtuel
+4. Installez les dépendances dans l'environnement virtuel
 
 ```bash
 uv add -r requirements.txt
@@ -32,13 +32,13 @@ uv add -r requirements.txt
 
 NB : vous pouvez aussi utiliser `uv pip install -r requirements.txt` si `uv add` provoque une erreur
 
-5. Lance l'API backend
+5. Lancez l'API backend
 
 ```bash
 python -m app.api.main
 ```
 
-6. Lance l'interface frontend
+6. Lancez l'interface frontend
 
 Dans un autre terminal
 
@@ -46,7 +46,7 @@ Dans un autre terminal
 streamlit run app/client/main.py
 ```
 
-7. Accède à l'application dans le navigateur : `http://localhost:8501`
+7. Accèdez à l'application dans le navigateur : `http://localhost:8501`
 
 ## Fonctionnalités métier
 
