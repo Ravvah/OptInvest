@@ -83,7 +83,7 @@ class GestionnaireGraphiques:
         timeline_portefeuille = pd.Series(donnees_portefeuille["timeline"], dtype=float)
         timeline_portefeuille.index = pd.to_datetime(timeline_portefeuille.index)
         
-        st.subheader("📊 Comparaison avec l'indice ACWI IMI")
+        st.subheader("Comparaison avec l'indice ACWI IMI")
         
         fig = go.Figure()
         fig.add_trace(go.Scatter(
@@ -230,7 +230,7 @@ class GestionnaireGraphiques:
         """
         Affiche les graphiques de diagnostic des résidus.
         """
-        st.subheader("📊 Diagnostic des Résidus")
+        st.subheader("Diagnostic des Résidus")
         
         # Création des onglets pour chaque stratégie
         strategies_list = list(donnees_strategies["strategies"].keys())
