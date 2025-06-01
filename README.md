@@ -55,7 +55,7 @@ streamlit run app/client/main.py
 - Support de différentes fréquences d'investissement (mensuelle, trimestrielle, semestrielle, annuelle)
 - Prise en compte des frais de gestion annuels
 - Calcul de métriques de performance (CAGR, rendement total)
-- NB : Le choix des actifs est limité à 6 actifs réels pour l'instant
+- **NB** : Le choix des actifs est limité à 6 actifs réels pour l'instant
 
 
 ### Comparaison de stratégies d'investissement
@@ -69,6 +69,11 @@ streamlit run app/client/main.py
 - Analyse de la qualité des modèles prédictifs
 - Visualisation de la distribution des résidus
 - Exportation des résultats en PDF et Excel
+- **NB** : L'indicateur "qualité" des prédictions affichée dans l'UI se base sur le coefficient de determination :
+           - si > 0.8, qualité excellente
+           - si entre 0.6 et 0.8, qualité correcte
+           - si < 0.6, qualité faible
+
 
 ## Stack technique
 
