@@ -54,7 +54,7 @@ streamlit run app/client/main.py
 - Analyse historique de portefeuilles sur des actifs réels (actions, ETF)
 - Support de différentes fréquences d'investissement (mensuelle, trimestrielle, semestrielle, annuelle)
 - Prise en compte des frais de gestion annuels
-- Calcul de métriques de performance (CAGR, rendement total)
+- Calcul de métriques de performance (CAGR, rendement total, volatilité et sharpe)
 - **NB** : Le choix des actifs est limité à 6 actifs réels pour l'instant
 
 
