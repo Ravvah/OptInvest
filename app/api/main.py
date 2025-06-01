@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 
-from app.api.routers import health, simulation
+from app.api.routers import health, simulation, prediction
 
 app = FastAPI(title="OPTINVEST API", version="0.1.0")
 
 #endpoints
 app.include_router(health.router)
 app.include_router(simulation.router, prefix="/api")
+app.include_router(prediction.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn

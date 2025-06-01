@@ -7,5 +7,5 @@ async def health_check() -> dict:
     """
     Health check endpoint to verify the API is running.
     """
-    return {"status": "ok", "message": "API is running"}
+    return {"status": "ok", "message": "l'API fonctionne correctement..."}
 

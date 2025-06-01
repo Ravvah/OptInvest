@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import Dict, List, Literal
+from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
@@ -10,8 +10,9 @@ ACTIFS: set[str] = {
     "MSFT",  # Action
     "AGGH",  # ETF obligataire global
     "TLT",   # ETF obligations US long terme
-    "VWCE",  # ETF actions monde
-    "SXR8",  # ETF S&P 500
+    "VWCE.DE",  # ETF actions monde
+    "SXR8.DE",  # ETF S&P 500
+    "ACIM",  # ETF actions monde
 }
 
 
@@ -19,20 +20,22 @@ class SimulationRequest(BaseModel):
     actifs: List[str] = Field(
         ...,
         description="Sélectionnez 1 à 6 actifs autorisés",
-        examples=[["VWCE", "AGGH"]],
+        examples=[["AAPL"]],
         min_length=1,
     )
-    # La date de départ est fixée à 'aujourd’hui' par défaut
-    date_debut: date = Field(
-        default_factory=date.today,
-        description="Date de départ (fixée à aujourd’hui)",
-        examples=[date.today().isoformat()],
-    )
+    # La date de départ est fixée à 'aujourd'hui - duree_ans' par défaut
+
+
     duree_ans: int = Field(
         ...,
         ge=1,
         description="Durée de la simulation en années",
         examples=[6],
+    )
+
+    date_debut: Optional[date] = Field(
+        None,
+        description="Date de départ (remplie automatiquement si omise)",
     )
     montant_initial: float = Field(
         ...,
@@ -72,6 +75,13 @@ class SimulationRequest(BaseModel):
                 f"Choix possibles : {', '.join(sorted(ACTIFS))}."
             )
         return v
+    
+    @model_validator(mode="after")
+    def _set_default_date(self):
+        """Si date_debut est pas spécifiée → today − durée."""
+        if self.date_debut is None:
+            self.date_debut = date.today() - timedelta(days=365 * self.duree_ans)
+        return self
 
 
 class SimulationResponse(BaseModel):
