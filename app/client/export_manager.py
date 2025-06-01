@@ -30,7 +30,7 @@ class GestionnaireExport:
             """
             Affiche les options d'export des résultats.
             """
-            st.subheader("📁 Export des résultats")
+            st.subheader("Export des résultats")
             
             col1, col2 = st.columns(2)
             

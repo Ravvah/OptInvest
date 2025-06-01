@@ -4,6 +4,50 @@
 
 OptInvest est une application d'analyse et de simulation de stratégies d'investissement sur les marchés financiers. Elle permet de comparer différentes approches d'investissement progressif (Dollar-Cost Averaging) et d'investissement en une fois (Lump Sum) sur des données historiques réelles, puis de générer des prédictions basées sur des modèles statistiques.
 
+## Installation
+
+1. Clone le projet depuis GitHub
+
+2. Installe uv
+
+```bash
+pip install uv
+```
+
+3. Crée et active l'environnement virtuel
+
+```bash
+uv venv
+```
+
+```bash
+source .venv/bin/activate
+```
+
+4. Installe les dépendances dans l'environnement virtuel
+
+```bash
+uv add -r requirements.txt
+```
+
+NB : vous pouvez aussi utiliser `uv pip install -r requirements.txt` si `uv add` provoque une erreur
+
+5. Lance l'API backend
+
+```bash
+python -m app.api.main
+```
+
+6. Lance l'interface frontend
+
+Dans un autre terminal
+
+```bash	
+streamlit run app/client/main.py
+```
+
+7. Accède à l'application dans le navigateur : `http://localhost:8501`
+
 ## Fonctionnalités métier
 
 ### Simulation de portefeuille
@@ -81,53 +125,15 @@ OptInvest est une application d'analyse et de simulation de stratégies d'invest
 - **MAE** (Mean Absolute Error): Erreur absolue moyenne
 - **Écart-type des résidus**: Dispersion des erreurs de prédiction
 
-## Installation
 
-1. Clone le projet depuis GitHub
-
-2. Installe uv
-
-```bash
-pip install uv
-```
-
-3. Crée et active l'environnement virtuel
-
-```bash
-uv venv
-```
-
-```bash
-source .venv/bin/activate
-```
-
-4. Installe les dépendances dans l'environnement virtuel
-
-```bash
-uv add -r requirements.txt
-```
-
-NB : vous pouvez aussi utiliser `uv pip install -r requirements.txt` si `uv add` provoque une erreur
-
-5. Lance l'API backend
-
-```bash
-python -m app.api.main
-```
-
-6. Lance l'interface frontend
-
-Dans un autre terminal
-
-```bash	
-streamlit run app/client/main.py
-```
-
-7. Accède à l'application dans le navigateur : `http://localhost:8501`
 
 ## Points d'amélioration
 
+### Bug
+- Bug d'exportation des données qui fait disparaitre le dashboard sur l'UI, il faudra re simuler pour le revoir
+
 ### Points Metiers
+
 - Support de plus d'actifs financiers
 
 ### Tests statistiques
@@ -152,8 +158,3 @@ streamlit run app/client/main.py
   CMD ["sh", "-c", "python -m app.api.main & streamlit run app/client/main.py"]
   ```
 
-- Configuration pour déploiement cloud (AWS, GCP, Azure)
-- CI/CD pour automatiser les tests et le déploiement
-
-### Évolutivité
-- Support de plus d'actifs financiers
