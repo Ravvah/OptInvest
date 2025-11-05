@@ -54,8 +54,9 @@ $$
 
 Pour comparer les stratégies, OptInvest calcule :
 
-- **Rendement total** : différence entre la valeur finale et le montant investi.
-- **CAGR (taux de croissance annuel composé)** :
+#### - **Rendement total** : 
+Différence entre la valeur finale et le montant investi.
+#### - **CAGR (taux de croissance annuel composé)** :
 
 $$
 \text{CAGR} = \left( \frac{V_f}{V_i} \right)^{1/T} - 1
@@ -65,34 +66,37 @@ $$
 - $V_i$ : montant total investi
 - $T$ : durée en années
 
-- **Volatilité annualisée** : mesure la dispersion des rendements périodiques, calculée comme l’écart-type des rendements multiplié par la racine du nombre de périodes par an.
+#### - **Volatilité annualisée** : 
+Mesure la dispersion des rendements périodiques, calculée comme l’écart-type des rendements multiplié par la racine du nombre de périodes par an.
 
-    Mathématiquement, si $r_1, r_2, \ldots, r_n$ sont les rendements périodiques (par exemple mensuels), l’écart-type des rendements est :
+Mathématiquement, si $r_1, r_2, \ldots, r_n$ sont les rendements périodiques (par exemple mensuels), l’écart-type des rendements est :
 
-    $$
-    \sigma_r = \sqrt{ \frac{1}{n} \sum_{i=1}^n (r_i - \bar{r})^2 }
-    $$
+$$
+\sigma_r = \sqrt{ \frac{1}{n} \sum_{i=1}^n (r_i - \bar{r})^2 }
+$$
 
-    où $\bar{r}$ est le rendement moyen :
+où $\bar{r}$ est le rendement moyen :
 
-    $$
-    \bar{r} = \frac{1}{n} \sum_{i=1}^n r_i
-    $$
+$$
+\bar{r} = \frac{1}{n} \sum_{i=1}^n r_i
+$$
 
-    La volatilité annualisée est alors :
+La volatilité annualisée est alors :
 
-    $$
-    \sigma_{\text{ann}} = \sigma_r \times \sqrt{f}
-    $$
+$$
+\sigma_{\text{ann}} = \sigma_r \times \sqrt{f}
+$$
 
-    où $f$ est le nombre de périodes par an (par exemple $f=12$ pour des rendements mensuels).
+où $f$ est le nombre de périodes par an (par exemple $f=12$ pour des rendements mensuels).
 
-    - $\sigma_r$ : écart-type des rendements périodiques
-    - $\sigma_{\text{ann}}$ : volatilité annualisée
-    - $f$ : nombre de périodes par an
+- $\sigma_r$ : écart-type des rendements périodiques
+- $\sigma_{\text{ann}}$ : volatilité annualisée
+- $f$ : nombre de périodes par an
 
-- **Ratio de Sharpe** :
-un ratio de Sharpe positif et élevé indique que la stratégie offre un rendement supérieur au taux sans risque, pour un niveau de volatilité donné.
+#### - **Ratio de Sharpe** :
+
+Un ratio de Sharpe positif et élevé indique que la stratégie offre un rendement supérieur au taux sans risque, pour un niveau de volatilité donné.
+
 $$
 \text{Sharpe} = \frac{\mu - r_f}{\sigma}
 $$
@@ -126,15 +130,15 @@ Ils représentent l'écart entre la valeur observée et la valeur prédite par l
 
 OptInvest analyse la distribution des résidus pour vérifier la validité du modèle :
 - **Écart-type des résidus** : 
-  $$
-  \sigma_\varepsilon = \sqrt{\frac{1}{n} \sum_{t=1}^n \varepsilon_t^2}
-  $$
-  où $n$ est le nombre de points simulés.
+$$
+\sigma_\varepsilon = \sqrt{\frac{1}{n} \sum_{t=1}^n \varepsilon_t^2}
+$$
+où $n$ est le nombre de points simulés.
 - **Histogramme et densité** : la forme des résidus est comparée à une loi normale centrée sur zéro.
 - **Absence de biais** : on vérifie que la moyenne des résidus est proche de zéro :
-  $$
-  \bar{\varepsilon} = \frac{1}{n} \sum_{t=1}^n \varepsilon_t \approx 0
-  $$
+$$
+\bar{\varepsilon} = \frac{1}{n} \sum_{t=1}^n \varepsilon_t \approx 0
+$$
 
 Une forte dispersion ou une structure particulière dans les résidus peut indiquer que le modèle linéaire n’explique pas correctement la dynamique du portefeuille.
 
