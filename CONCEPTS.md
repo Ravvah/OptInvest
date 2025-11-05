@@ -123,19 +123,25 @@ $$
 - $\varepsilon_t$ : erreur de prédiction à la date $t$
 
 Les résidus $\varepsilon_t$ sont définis par :
+
 $$
 \varepsilon_t = V_t - (a + b t)
 $$
+
 Ils représentent l'écart entre la valeur observée et la valeur prédite par le modèle.
 
 OptInvest analyse la distribution des résidus pour vérifier la validité du modèle :
-- **Écart-type des résidus** : 
+- **Écart-type des résidus** :
+
 $$
 \sigma_\varepsilon = \sqrt{\frac{1}{n} \sum_{t=1}^n \varepsilon_t^2}
 $$
+
 où $n$ est le nombre de points simulés.
+
 - **Histogramme et densité** : la forme des résidus est comparée à une loi normale centrée sur zéro.
 - **Absence de biais** : on vérifie que la moyenne des résidus est proche de zéro :
+
 $$
 \bar{\varepsilon} = \frac{1}{n} \sum_{t=1}^n \varepsilon_t \approx 0
 $$
