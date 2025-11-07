@@ -109,7 +109,11 @@ $$
 
 ## 4. Modélisation et prédiction
 
-Pour estimer la tendance future, OptInvest applique une régression linéaire sur la série historique de la valeur du portefeuille. Cette approche permet d’obtenir une projection simple de l’évolution du portefeuille dans le temps, en prolongeant la tendance observée sur la période simulée.
+Pour estimer la tendance future, on va étudier plusieurs approches de modélisation temporelle. La plus simple et la première sera le modèle linéaire gaussien. On aborde aussi les modélisations par series temporelles.
+
+### 1) Modèle linéaire gaussien
+
+OptInvest applique une régression linéaire sur la série historique de la valeur du portefeuille. Cette approche permet d’obtenir une projection simple de l’évolution du portefeuille dans le temps, en prolongeant la tendance observée sur la période simulée.
 
 La régression est réalisée sur les valeurs historiques, où chaque date est transformée en nombre de jours écoulés depuis le début de la simulation. Le modèle ajuste une droite aux données :
 
