@@ -78,7 +78,7 @@ class SimulationRequest(BaseModel):
     
     @model_validator(mode="after")
     def _set_default_date(self):
-        """Si date_debut est pas spécifiée → today − durée."""
+        """Si date_debut est pas spécifiée → today - durée."""
         if self.date_debut is None:
             self.date_debut = date.today() - timedelta(days=365 * self.duree_ans)
         return self

@@ -73,13 +73,18 @@ class RegressionMetrics(BaseModel):
     rmse: float = Field(..., description="Erreur quadratique moyenne")
     mae: float = Field(..., description="Erreur absolue moyenne")
     std_residus: float = Field(..., description="Écart-type des résidus")
-    pente: float = Field(..., description="Pente de la droite de régression")
+    pente: Optional[float] = Field(None, description="Pente de la droite de régression (pour modèle temps seul)")
     intercept: float = Field(..., description="Ordonnée à l'origine")
+    dw_stat: float = Field(..., description="Statistique Durbin-Watson pour l'autocorrélation des résidus")
+    pente_temps: Optional[float] = Field(None, description="Pente pour le temps (pour modèle temps + volume)")
+    pente_volume: Optional[float] = Field(None, description="Pente pour le volume (pour modèle temps + volume)")
 
 class StrategyResult(BaseModel):
     timeline_historique: Dict[str, float] = Field(..., description="Timeline historique")
     predictions: Dict[str, float] = Field(..., description="Prédictions futures")
     regression_metrics: RegressionMetrics = Field(..., description="Métriques de qualité")
+    residus: Optional[List[float]] = Field(None, description="Résidus de la régression")
+    volume: Optional[List[float]] = Field(None, description="Données de volume (pour modèle temps+volume)")
     cagr: float = Field(..., description="CAGR de la stratégie")
     rendement_total: float = Field(..., description="Rendement total")
 

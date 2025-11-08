@@ -1,5 +1,7 @@
 from datetime import date, timedelta
 from fastapi import APIRouter, HTTPException, status
+import traceback
+
 
 from app.api.schemas.prediction import PredictionRequest, PredictionResponse
 from app.core.predictor import PortefeuillePredictorDCA
@@ -55,6 +57,7 @@ async def predire_strategies_dca(parametres_requete: PredictionRequest) -> Predi
         return PredictionResponse(**resultats_comparaison)
         
     except Exception as erreur:
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erreur lors de la prédiction: {str(erreur)}"

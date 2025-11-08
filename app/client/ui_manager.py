@@ -1,4 +1,5 @@
 from __future__ import annotations
+from datetime import date, timedelta
 from typing import Dict, List, Optional
 
 import streamlit as st
@@ -51,7 +52,7 @@ class InterfaceUtilisateur:
             st.header("Prédictions")
             duree_prediction_annees = st.slider("Durée de prédiction (années)", 1, 10, 5)
             
-            bouton_lancer = st.button("▶️ Simuler")
+            bouton_lancer = st.button("Simuler")
 
         if bouton_lancer:
             if not actifs_selectionnes:
@@ -83,9 +84,14 @@ class InterfaceUtilisateur:
         """
         Construit le dictionnaire des paramètres de simulation.
         """
+
+        # Définir la date de début par défaut
+        date_debut = str(date.today() - timedelta(days=365 * duree_simulation_annees))
+
         parametres_base = {
             "actifs": actifs_selectionnes,
             "duree_ans": duree_simulation_annees,
+            "date_debut": date_debut,
             "montant_initial": montant_initial,
             "apport_periodique": apport_periodique,
             "frequence": frequence_investissement,

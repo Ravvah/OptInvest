@@ -36,6 +36,10 @@ class OptinvestApp:
             with st.spinner("Simulation en cours..."):
                 donnees_portefeuille = self.api.appeler_simulation(parametres["base"])
                 serie_benchmark = self.api.charger_benchmark(parametres["base"], montant_initial=parametres["montant_initial"])
+                print(" -------------- Paramètres de la simulation ACIM ---------------")
+                print(parametres)
+                print("---------- Benchmark loaded in client main.py -------")
+                print(serie_benchmark)
                 donnees_prediction = self.api.appeler_prediction(parametres["prediction"])
                 
                 self._afficher_resultats(donnees_portefeuille, serie_benchmark, donnees_prediction, parametres)

@@ -33,23 +33,27 @@ class PortefeuilleSimulator:
         prix_moyen = self._charger_prix(actifs, start, end)
 
         nombre_mois = FREQ2MONTH[frequence]
-        dates_apport = pd.date_range(start=start, end=end, freq=f"{nombre_mois}M").date
+        dates_apport = pd.date_range(start=start, end=end, freq=f"{nombre_mois}ME").date
 
         nombre_parts = 0.0
         cash_investi_total = 0.0
         chronologie_valeurs: Dict[str, float] = {}
+        
+        montant_initial_investi = False
 
         for date_courante, prix_courant in prix_moyen.items():
             date_courante_convertie = pd.to_datetime(str(date_courante)).date()
 
-            if date_courante_convertie == start:
+            if not montant_initial_investi:
                 nombre_parts += montant_initial / prix_courant
                 cash_investi_total += montant_initial
+                montant_initial_investi = True
 
-            if date_courante_convertie in dates_apport and date_courante_convertie != start:
+            elif date_courante_convertie in dates_apport:
                 nombre_parts += apport_periodique / prix_courant
                 cash_investi_total += apport_periodique
 
+            # Frais de gestion annuels
             if date_courante_convertie.month == 12 and date_courante_convertie.day == 31:
                 nombre_parts *= 1 - frais_gestion_pct / 100
 
