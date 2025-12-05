@@ -1,29 +1,18 @@
 from __future__ import annotations
-from datetime import date, timedelta
-from typing import Dict, List, Optional
 
+from typing import Any, Dict
 import streamlit as st
 
-class InterfaceUtilisateur:
-    ACTIFS_AUTORISES: List[str] = [
-        "AAPL", "MSFT", "AGGH", "TLT", "VWCE.DE", "SXR8.DE"
-    ]
-    
-    FREQUENCES: Dict[str, str] = {
-        "Mensuelle": "mensuelle",
-        "Trimestrielle": "trimestrielle", 
-        "Semestrielle": "semestrielle",
-        "Annuelle": "annuelle",
-    }
-    
-    MOIS_PAR_FREQ: Dict[str, int] = {
-        "mensuelle": 1,
-        "trimestrielle": 3,
-        "semestrielle": 6,
-        "annuelle": 12,
-    }
+from app.api.schemas.prediction import PredictionRequest
+from app.api.schemas.simulation import SimulationRequest
+import app.client.constants as cst
 
-    def afficher_sidebar(self) -> Optional[Dict]:
+class UserForm:
+
+    def __init__(self):
+        pass
+
+    def display_user_form_sidebar(self) -> Dict[str, Any]:
         """
         Affiche la barre latérale et retourne les paramètres de simulation.
         """
@@ -32,7 +21,7 @@ class InterfaceUtilisateur:
             
             actifs_selectionnes = st.multiselect(
                 "Choisissez vos actifs", 
-                self.ACTIFS_AUTORISES, 
+                cst.ACTIFS_AUTORISES, 
                 default=["AAPL"]
             )
             
@@ -42,86 +31,88 @@ class InterfaceUtilisateur:
             
             frequence_affichage = st.selectbox(
                 "Fréquence d'investissement", 
-                list(self.FREQUENCES.keys()), 
+                list(cst.FREQUENCES.keys()), 
                 0
             )
-            frequence_investissement = self.FREQUENCES[frequence_affichage]
+            frequence_investissement = cst.FREQUENCES[frequence_affichage]
             
             frais_gestion = st.number_input("Frais de gestion annuels (%)", 0.0, 5.0, 0.2, 0.1)
             
             st.header("Prédictions")
-            duree_prediction_annees = st.slider("Durée de prédiction (années)", 1, 10, 5)
+            duree_prediction_ans = st.slider("Durée de prédiction (années)", 1, 10, 5)
             
             bouton_lancer = st.button("Simuler")
-
-        if bouton_lancer:
-            if not actifs_selectionnes:
-                st.error("Veuillez sélectionner au moins un actif.")
-                return None
-
-            return self._construire_parametres(
-                actifs_selectionnes,
-                duree_simulation_annees,
-                montant_initial,
-                apport_periodique,
-                frequence_investissement,
-                frais_gestion,
-                duree_prediction_annees
-            )
         
-        return None
+        return dict(actifs_selectionnes=actifs_selectionnes,
+                    duree_simulation_annees=duree_simulation_annees,
+                    montant_initial=montant_initial,
+                    apport_periodique=apport_periodique,
+                    frequence_investissement=frequence_investissement,
+                    frais_gestion=frais_gestion,
+                    duree_prediction_ans=duree_prediction_ans,
+                    lancer=bouton_lancer) if bouton_lancer else None
+                    
 
-    def _construire_parametres(
+    def _build_portfolio_simulation_request(
         self,
-        actifs_selectionnes: List[str],
-        duree_simulation_annees: int,
-        montant_initial: float,
-        apport_periodique: float,
-        frequence_investissement: str,
-        frais_gestion: float,
-        duree_prediction_annees: int
-    ) -> Dict:
+        inputs: dict
+    ) -> tuple[SimulationRequest, str]:
         """
         Construit le dictionnaire des paramètres de simulation.
         """
 
-        # Définir la date de début par défaut
-        date_debut = str(date.today() - timedelta(days=365 * duree_simulation_annees))
+        if not inputs:
+            raise ValueError("Aucun paramètre d'entrée fourni pour la simulation.")
+        
+        return SimulationRequest(
+            actifs=inputs["actifs_selectionnes"],
+            duree_ans=inputs["duree_simulation_annees"],
+            montant_initial=inputs["montant_initial"],
+            apport_periodique=inputs["apport_periodique"],
+            frequence=inputs["frequence_investissement"],
+            frais_gestion=inputs["frais_gestion"],
+            
+        ), inputs["duree_prediction_ans"]
+    
+    def _build_prediction_request(
+        self,
+        valeur_portefeuille_temps: dict[str, float],
+        valeur_portefeuille_montant: dict[str, float],
+        duree_prediction_ans: int,
+        apport_periodique: float,
+        frequence: str,
+        modele: str
 
-        parametres_base = {
-            "actifs": actifs_selectionnes,
-            "duree_ans": duree_simulation_annees,
-            "date_debut": date_debut,
-            "montant_initial": montant_initial,
-            "apport_periodique": apport_periodique,
-            "frequence": frequence_investissement,
-            "frais_gestion": frais_gestion,
-        }
-
-        parametres_prediction = {
-            **parametres_base,
-            "duree_prediction_ans": duree_prediction_annees
-        }
-
-        return {
-            "base": parametres_base,
-            "prediction": parametres_prediction,
-            "duree_simulation_annees": duree_simulation_annees,
-            "frequence_investissement": frequence_investissement,
-            "montant_initial": montant_initial,
-            "apport_periodique": apport_periodique,
-            "duree_prediction_annees": duree_prediction_annees
-        }
-
-    def calculer_cash_investi(
-        self, 
-        duree_simulation_annees: int, 
-        frequence_investissement: str, 
-        montant_initial: float, 
-        apport_periodique: float
-    ) -> float:
+    ) -> PredictionRequest:
         """
-        Calcule le montant total de cash investi.
+        Construit le dictionnaire des paramètres de prédiction.
         """
-        nombre_periodes = (duree_simulation_annees * 12) // self.MOIS_PAR_FREQ[frequence_investissement]
-        return montant_initial + nombre_periodes * apport_periodique
+        if not valeur_portefeuille_temps:
+            raise ValueError("Pas de timeline trouvée pour construire ")
+        
+        date_derniere_simulation = list(valeur_portefeuille_temps.keys())[-1]
+        liste_montants = [[float(key)] for key in valeur_portefeuille_montant.keys()]
+        liste_valeurs_portefeuille = list(valeur_portefeuille_montant.values())
+
+        return PredictionRequest(
+            x=liste_montants,
+            y=liste_valeurs_portefeuille,
+            duree_prediction_ans=duree_prediction_ans,
+            apport_periodique=apport_periodique,
+            frequence=frequence,
+            date_derniere_simulation=date_derniere_simulation,
+            modele=modele
+        )
+    # TO DO: enlever cette méthode du front car le back end est censé gérer ça
+    # def calculer_cash_investi(
+    #     self, 
+    #     duree_simulation_annees: int, 
+    #     frequence_investissement: str, 
+    #     montant_initial: float, 
+    #     apport_periodique: float
+    # ) -> float:
+    #     """
+    #     Calcule le montant total de cash investi.
+    #     """
+    #     nombre_periodes = (duree_simulation_annees * 12) // cst.MOIS_PAR_FREQ[frequence_investissement]
+    #     return montant_initial + nombre_periodes * apport_periodique

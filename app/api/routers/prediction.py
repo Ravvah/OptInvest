@@ -4,15 +4,12 @@ import traceback
 
 
 from app.api.schemas.prediction import PredictionRequest, PredictionResponse
-from app.core.predictor import PortefeuillePredictorDCA
+from app.core.predictor import LinearModelPredictor
 
 router = APIRouter(
     prefix="/predire",
     tags=["prediction"],
 )
-
-predicteur_portefeuille = PortefeuillePredictorDCA()
-
 
 @router.post(
     "/",
@@ -20,7 +17,7 @@ predicteur_portefeuille = PortefeuillePredictorDCA()
     status_code=status.HTTP_200_OK,
     summary="Prédire et comparer les stratégies DCA",
 )
-async def predire_strategies_dca(parametres_requete: PredictionRequest) -> PredictionResponse:
+async def predict_portfolio_future_growth(parametres_requete: PredictionRequest) -> PredictionResponse:
     """
     Lance une simulation avec prédictions pour comparer les stratégies DCA.
 
@@ -36,25 +33,22 @@ async def predire_strategies_dca(parametres_requete: PredictionRequest) -> Predi
     - strategies : dictionnaire avec les résultats pour chaque stratégie (DCA + Lump Sum)
     """
     
-    date_debut_simulation = parametres_requete.date_debut or (
-        date.today() - timedelta(days=365 * parametres_requete.duree_ans)
-    )
-    date_fin_simulation = date_debut_simulation.replace(
-        year=date_debut_simulation.year + parametres_requete.duree_ans
-    )
+    # date_debut_simulation = parametres_requete.date_debut or (
+    #     date.today() - timedelta(days=365 * parametres_requete.duree_ans)
+    # )
+    # date_fin_simulation = date_debut_simulation.replace(
+    #     year=date_debut_simulation.year + parametres_requete.duree_ans
+    # )
     
     try:
-        resultats_comparaison = predicteur_portefeuille.comparer_strategies_dca(
-            actifs=parametres_requete.actifs,
-            start=date_debut_simulation,
-            end=date_fin_simulation,
-            montant_initial=parametres_requete.montant_initial,
-            apport_periodique=parametres_requete.apport_periodique,
-            frais_gestion_pct=parametres_requete.frais_gestion,
-            duree_prediction_ans=parametres_requete.duree_prediction_ans
-        )
-        
-        return PredictionResponse(**resultats_comparaison)
+        predicteur_portefeuille = LinearModelPredictor(parametres_requete)
+        print("------------------------ GET PREDICTION RESPONSE")
+        resultats = predicteur_portefeuille._get_prediction_response()
+        import math
+        for k, v in resultats.model_dump().items():
+            if isinstance(v, float) and not math.isfinite(v):
+                print(f"Champ non valide : {k} = {v}")
+        return resultats
         
     except Exception as erreur:
         traceback.print_exc()

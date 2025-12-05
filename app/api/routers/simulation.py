@@ -2,14 +2,12 @@ from datetime import date, timedelta
 from fastapi import APIRouter, status
 
 from app.api.schemas.simulation import SimulationRequest, SimulationResponse
-from app.core.simulator import PortefeuilleSimulator
+from app.core.simulator import Simulator
 
 router = APIRouter(
     prefix="/simuler",
     tags=["simulation"],
 )
-
-simulateur_portefeuille = PortefeuilleSimulator()
 
 
 @router.post(
@@ -18,7 +16,7 @@ simulateur_portefeuille = PortefeuilleSimulator()
     status_code=status.HTTP_200_OK,
     summary="Simuler un portefeuille d'investissement",
 )
-async def simuler_portefeuille(parametres_requete: SimulationRequest) -> SimulationResponse:
+async def simulate_portfolio_growth(parametres_requete: SimulationRequest) -> SimulationResponse:
     """
     Lance une simulation historique sur la période demandée.
 
@@ -35,22 +33,12 @@ async def simuler_portefeuille(parametres_requete: SimulationRequest) -> Simulat
     - rendement_total : gain net en euros
     - timeline : dict « date ISO → valeur du portefeuille »
     """
+    if not parametres_requete.date_debut:
+        parametres_requete.date_debut = date.today() - timedelta(days=365 * parametres_requete.duree_ans)
 
-    date_debut_simulation = parametres_requete.date_debut or (
-        date.today() - timedelta(days=365 * parametres_requete.duree_ans)
+    parametres_requete.date_fin = parametres_requete.date_debut.replace(
+        year=parametres_requete.date_debut.year + parametres_requete.duree_ans
     )
-    date_fin_simulation = date_debut_simulation.replace(
-        year=date_debut_simulation.year + parametres_requete.duree_ans
-    )
-    
-    resultats_simulation = simulateur_portefeuille.simuler(
-        actifs=parametres_requete.actifs,
-        start=date_debut_simulation,
-        end=date_fin_simulation,
-        montant_initial=parametres_requete.montant_initial,
-        apport_periodique=parametres_requete.apport_periodique,
-        frequence=parametres_requete.frequence,
-        frais_gestion_pct=parametres_requete.frais_gestion,
-    )
-    
-    return SimulationResponse(**resultats_simulation)
+    simulateur_portefeuille = Simulator(requete=parametres_requete)
+    resultats_simulation = simulateur_portefeuille.simulate_portfolio_growth()
+    return resultats_simulation

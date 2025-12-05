@@ -16,9 +16,9 @@ from reportlab.lib.units import inch
 import xlsxwriter
 import numpy as np
 
-from ui_manager import InterfaceUtilisateur
+from ui_manager import UserForm
 
-class GestionnaireExport:
+class ExportManager:
 
     def afficher_options_export(
             self, 
@@ -113,7 +113,7 @@ class GestionnaireExport:
         """
         Écrit l'onglet résumé dans Excel.
         """
-        interface = InterfaceUtilisateur()
+        interface = UserForm()
         
         worksheet = workbook.add_worksheet('Résumé')
         
@@ -550,7 +550,7 @@ class GestionnaireExport:
         """
         Ajoute la section résumé au PDF.
         """
-        interface = InterfaceUtilisateur()
+        interface = UserForm()
         
         story.append(Paragraph("Résumé de Performance", styles['Heading2']))
         
