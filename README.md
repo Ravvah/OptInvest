@@ -228,9 +228,21 @@ Pour une description détaillée des concepts mathématiques et des formules uti
 ## Aperçu de l'application
 - Aperçu global :
 
+<img width="1811" height="965" alt="image" src="https://github.com/user-attachments/assets/932d8b5d-62f3-4555-a986-d398583e36f0" />
+
 
 
 
 
 - Graphiques :
+
+<img width="1281" height="447" alt="image" src="https://github.com/user-attachments/assets/2f757e73-b3da-4985-90a0-aabd29beb759" />
+
+<img width="1281" height="447" alt="image" src="https://github.com/user-attachments/assets/bd2faf83-3003-4209-8143-bdcaad156be1" />
+
+<img width="1284" height="698" alt="image" src="https://github.com/user-attachments/assets/be64d415-b0aa-4321-b0be-eabe309620c8" />
+
+<img width="1279" height="843" alt="image" src="https://github.com/user-attachments/assets/082da289-11af-4ad5-a0ac-2da3d79fd5d2" />
+
+<img width="1242" height="428" alt="image" src="https://github.com/user-attachments/assets/750ca4cb-b09d-4243-b205-0876d16ae49b" />
 
