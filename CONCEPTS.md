@@ -156,15 +156,17 @@ En pratique, on minimise $-U(w)$ avec la fonction `scipy.optimize.minimize`.
 
 ### Contraintes
 
-1. **Contrainte budgétaire** : La somme des poids doit être égale à 1
-   $$
-   \sum_{i=1}^{n} w_i = 1
-   $$
+1. **Contrainte budgétaire** : La somme des poids doit être égale à 1 :
 
-2. **Contrainte de positivité** : Pas de vente à découvert
-   $$
-   w_i \geq 0 \quad \forall i
-   $$
+$$
+\sum_{i=1}^{n} w_i = 1
+$$
+
+3. **Contrainte de positivité** : Pas de vente à découvert :
+
+$$
+w_i \geq 0 \quad \forall i
+$$
 
 ### Frontière efficiente
 
