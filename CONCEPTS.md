@@ -154,6 +154,8 @@ où :
 
 En pratique, on minimise $-U(w)$ avec la fonction `scipy.optimize.minimize`.
 
+**NB** : La matrice $\Sigma$ est estimé par la matrice de covariance empirique $\hat{\Sigma}$
+
 ### Contraintes
 
 1. **Contrainte budgétaire** : La somme des poids doit être égale à 1 :
