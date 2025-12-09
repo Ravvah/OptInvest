@@ -197,9 +197,8 @@ streamlit run app/client/main.py
 - Support de plus d'actifs financiers au-delà des 6 actifs actuels
 - Implémentation des modèles prédictifs avancés (AR, ARMA, ARMA-GARCH)
 
-### Tests statistiques
-- Implémenter des tests de normalité plus robustes pour les résidus (Shapiro-Wilk, Jarque-Bera)
-- Ajouter des tests d'hétéroscédasticité (White, Breusch-Pagan)
+### Optimisation du portefeuille
+- Mieux estimer la matrice de covariance $\Sigma$ des rendements des actifs, la matrice de covariance empirique n'est pas robuste.
 
 ### Packaging et déploiement
 - Containerisation avec Docker :
