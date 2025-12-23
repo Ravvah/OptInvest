@@ -12,3 +12,4 @@ xlsxwriter
 plotly
 reportlab
 statsmodels
+loguru

@@ -22,3 +22,6 @@ dependencies = [
     "xlsxwriter>=3.2.3",
     "yfinance>=0.2.61",
 ]
+
+[tool.setuptools]
+packages = ["app"]

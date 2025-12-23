@@ -6,7 +6,7 @@ from loguru import logger
 
 from app.api.schemas.prediction import PredictionRequest, PredictionResponse
 from app.api.schemas.simulation import SimulationRequest, SimulationResponse
-from app.client.ui_manager import UserForm
+from app.client.user_form_manager import UserForm
 import app.client.constants as cst
 
 class APIManager:
@@ -55,62 +55,3 @@ class APIManager:
         resultat_prediction_lump_sum = self.call_api_prediction(parametres_requete=parametres_prediction_lump_sum)
         result_all_strategies.append((resultat_simulation_lump_sum, resultat_prediction_lump_sum))
         return result_all_strategies
-
-
-
-
-
-    #TO DO: enlever cette fonction car juste un appel de simuler avec d'autres parametres
-
-    # def charger_benchmark(self, parametres_base: Dict, montant_initial: float) -> pd.Series:
-
-    # """
-
-    # Charge l'indice de référence via simulation DCA (même stratégie que le portefeuille).
-
-    # """
-
-    # parametres_benchmark = {
-
-    # **parametres_base, # Mêmes dates, montant initial, apports, fréquence
-
-    # "actifs": [cst.INDICE_REF] # Mais uniquement ACIM
-
-    # }
-
-    # try:
-
-    # donnees_benchmark = self.call_api_simulation(parametres_benchmark)
-
-    # except requests.exceptions.RequestException as e:
-
-    # print(f"Erreur lors du chargement de l'indice {cst.INDICE_REF}: {e}")
-
-    # return pd.Series(dtype=float)
-
-
-    # # Créer la série
-
-    # serie = pd.Series(donnees_benchmark["timeline"], dtype=float)
-
-    # serie.index = pd.to_datetime(serie.index)
-
-    # serie = serie.sort_index()
-
-    # # NE PAS supprimer les valeurs - l'API retourne déjà les bonnes valeurs
-
-    # # La série doit commencer au montant_initial comme le portefeuille
-
-    # if serie.empty:
-
-    # print(f"Aucune donnée valide pour l'indice {cst.INDICE_REF}")
-
-    # return pd.Series(dtype=float)
-
-    # serie.name = f"Indice {cst.INDICE_REF}"
-
-    # print(f"Benchmark {cst.INDICE_REF} chargé : {len(serie)} points")
-
-    # print(f"Début: {serie.iloc[0]:.2f}€, Fin: {serie.iloc[-1]:.2f}€")
-
-    # return serie 

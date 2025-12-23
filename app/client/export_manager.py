@@ -16,7 +16,7 @@ from reportlab.lib.units import inch
 import xlsxwriter
 import numpy as np
 
-from ui_manager import UserForm
+from app.client.user_form_manager import UserForm
 
 class ExportManager:
 

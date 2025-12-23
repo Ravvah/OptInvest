@@ -103,16 +103,3 @@ class UserForm:
             date_derniere_simulation=date_derniere_simulation,
             modele=modele
         )
-    # TO DO: enlever cette méthode du front car le back end est censé gérer ça
-    # def calculer_cash_investi(
-    #     self, 
-    #     duree_simulation_annees: int, 
-    #     frequence_investissement: str, 
-    #     montant_initial: float, 
-    #     apport_periodique: float
-    # ) -> float:
-    #     """
-    #     Calcule le montant total de cash investi.
-    #     """
-    #     nombre_periodes = (duree_simulation_annees * 12) // cst.MOIS_PAR_FREQ[frequence_investissement]
-    #     return montant_initial + nombre_periodes * apport_periodique

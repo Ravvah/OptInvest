@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from statistics import mean, variance
 from typing import Dict, List
 import pandas as pd
 import numpy as np
 from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split
 from statsmodels.stats.stattools import durbin_watson
 from statsmodels.tsa.ar_model import AutoReg
 import statsmodels.api as sm
@@ -196,9 +194,15 @@ class LinearModelPredictor(Predictor):
 class AutoRegressiveModelPredictor(Predictor):
     """
     Class for AutoRegressive Model Predictor"""
-    def __init__(self, requete):
+    def __init__(self, requete, lags):
         super().__init__(requete)
         self.model = None
+        self.lags = lags
+
+    def _fit(self):
+        model = AutoReg(endog=self.requete.y, lags=self.lags).fit()
+        
+        
     
 
 

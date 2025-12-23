@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
-from typing import Any, Dict, List
+from typing import Dict, List
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
@@ -32,7 +31,6 @@ class Simulator:
                                                     self.requete.date_debut, 
                                                     self.requete.date_fin)
         
-        # Ne conserver que les colonnes de prix (et non les volumes)
         cols_prix = [actif for actif in self.requete.actifs]
         return df_prix[cols_prix]
 

@@ -5,7 +5,7 @@ import streamlit as st
 
 from app.api.schemas.prediction import PredictionResponse
 from app.api.schemas.simulation import SimulationRequest, SimulationResponse
-from app.client.ui_manager import UserForm
+from app.client.user_form_manager import UserForm
 from app.client.api_manager import APIManager
 from app.client.plot_manager import DashboardManager
 # from export_manager import ExportManager
