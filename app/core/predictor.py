@@ -4,9 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, List
 import pandas as pd
 import numpy as np
-from sklearn.metrics import r2_score
 from statsmodels.stats.stattools import durbin_watson
-from statsmodels.tsa.ar_model import AutoReg
 import statsmodels.api as sm
 
 from app.api.schemas.constants import FREQ2MONTH
@@ -69,6 +67,20 @@ class LinearModelPredictor(Predictor):
             raise ValueError("Le modèle n'a pas encore été ajusté !")
 
         return self.model.rsquared  
+    
+    def _get_r_squared_validation(self, y_true: List[float], y_pred: List[float]) -> float:
+        y_true = np.array(y_true)
+        y_pred = np.array(y_pred)
+
+        ss_regression = np.sum((y_true - y_pred) ** 2)
+        ss_total = np.sum((y_true - np.mean(y_true)) ** 2)
+
+        if ss_total == 0.0:
+            return 0.0
+        
+        r_squared_validation = 1 - (ss_regression / ss_total)
+        return r_squared_validation
+
     
     def _get_rmse(self) -> float:
         if self.model is None:
@@ -155,7 +167,7 @@ class LinearModelPredictor(Predictor):
 
         # R² val
         try:
-            r2_val = r2_score(y_val, y_pred_val)
+            r2_val = self._get_r_squared_validation(y_val, y_pred_val)
             if np.isnan(r2_val):
                 r2_val = 0.0
         except Exception:
@@ -197,21 +209,16 @@ class AutoRegressiveModelPredictor(Predictor):
     def __init__(self, requete, lags):
         super().__init__(requete)
         self.model = None
-        self.lags = lags
-
-    def _fit(self):
-        model = AutoReg(endog=self.requete.y, lags=self.lags).fit()
-        
-        
+        self.lags = lags        
+        pass
     
 
 
-#TO DO: implement an ARMA Processus as the third model
-class ARMA1ModelPredictor(Predictor):
+#TO DO: implement an ARIMA Processus as the third model
+class ARIMA1ModelPredictor(Predictor):
     def __init__(self, requete):
         super().__init__(requete)
         self.model = None
-
 
 #TO DO: implement an ARMA-GARCH Processus as the fourth model
 class ARMAGARCH1ModelPredictor(Predictor):

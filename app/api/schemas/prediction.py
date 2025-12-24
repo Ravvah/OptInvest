@@ -63,32 +63,6 @@ class PredictionRequest(BaseModel):
             }
         }
 
-
-# class LinearRegressionMetrics(BaseModel):
-#     r2: float = Field(..., description="Coefficient de détermination")
-#     rmse: float = Field(..., description="Erreur quadratique moyenne")
-#     mae: float = Field(..., description="Erreur absolue moyenne")
-#     std_residus: float = Field(..., description="Écart-type des résidus")
-#     intercept: float = Field(..., description="Ordonnée à l'origine")
-#     dw_stat: float = Field(..., description="Statistique Durbin-Watson pour l'autocorrélation des résidus")
-
-
-# class StochasticProcessMetrics(BaseModel):
-#     aic: float = Field(..., description="AIC du modèle AR")
-#     bic: float = Field(..., description="BIC du modèle AR")
-#     params: Dict[str, float] = Field(..., description="Paramètres du modèle AR")
-
-# class PredictionResult(BaseModel):
-#     timeline_historique: Dict[str, float] = Field(..., description="Timeline historique")
-#     predictions: Dict[str, float] = Field(..., description="Prédictions futures")
-#     regression_metrics: Optional[LinearRegressionMetrics] = Field(None, description="Métriques de qualité (pour régression)")
-#     gp_metrics: Optional[StochasticProcessMetrics] = Field(None, description="Métriques du modèle AR")
-#     residus: Optional[List[float]] = Field(None, description="Résidus de la régression")
-#     volume: Optional[List[float]] = Field(None, description="Données de volume (pour modèle temps+volume)")
-#     cagr: float = Field(..., description="CAGR de la stratégie")
-#     rendement_total: float = Field(..., description="Rendement total")
-
-
 class FitQualityAnalysis(BaseModel):
     r2: float = Field(..., description="Coefficient de détermination R² du modèle")
     rmse: float= Field(..., description="Erreur quadratique moyenne du modèle")
