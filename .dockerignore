@@ -1,0 +1,44 @@
+# Git et IDE
+.git
+.gitignore
+.vscode
+.idea
+.history
+
+# Python - Fichiers générés
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+.venv
+.uv
+uv.lock.bak
+
+# Markdown - ATTENTION
+*.md
+!README.md
+
+.DS_Store
+.ipynb_checkpoints
+*.pdf
+/token
+requirements.txt
+.env
+.python-version

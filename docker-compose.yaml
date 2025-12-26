@@ -1,0 +1,30 @@
+services:
+  optinvest_server: 
+    build:
+      context: .
+      target: server
+    container_name: optinvest_server
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - optinvest_network
+  
+  optinvest_client:
+    build:
+      context: .
+      target: client
+    container_name: optinvest_client
+    restart: always
+    ports:
+     - "8501:8501"
+    environment:
+     - API_URL=http://optinvest_server:8000
+    networks:
+      - optinvest_network
+    depends_on:
+      - optinvest_server
+
+networks:
+  optinvest_network:
+    driver: bridge
