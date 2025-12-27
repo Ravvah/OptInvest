@@ -2,19 +2,40 @@
 
 ## Description
 
-OptInvest est une application d'analyse et de simulation de stratégies d'investissement sur les marchés financiers. Elle permet de comparer différentes approches d'investissement progressif (Dollar-Cost Averaging - DCA) et d'investissement unique (Lump Sum), avec optimisation de portefeuille selon la théorie de Markowitz et modélisation prédictive.
+OptInvest est une application d'analyse et de simulation de stratégies d'investissement sur les marchés financiers. Elle permet de comparer différentes approches d'investissement progressif (Dollar-Cost Averaging) et en une fois (Lump Sum), d'optimiser les allocations de portefeuille selon la théorie moderne de portefeuille (Markowitz), et de réaliser des prédictions statistiques.
 
 ## Installation
 
-1. Clone le projet depuis GitHub
+### Option 1 : Installation avec Docker (Recommandé)
 
-2. Installez uv
+1. **Installez Docker**
+   - Téléchargez et installez Docker Desktop depuis [docker.com](https://www.docker.com/get-started)
+   - Vérifiez l'installation : `docker --version`
+
+2. **Clonez le projet depuis GitHub**
+
+3. **Lancez l'application avec Docker Compose**
+
+```bash
+docker-compose up
+```
+
+4. **Accédez à l'application dans le navigateur : `http://localhost:8501`**
+
+### Option 2 : Installation manuelle avec uv
+
+1. **Clonez le projet depuis GitHub**
+
+2. **Installez Docker** (requis pour certaines fonctionnalités)
+   - Téléchargez et installez Docker Desktop depuis [docker.com](https://www.docker.com/get-started)
+
+3. **Installez uv**
 
 ```bash
 pip install uv
 ```
 
-3. Créez et activez l'environnement virtuel
+4. **Créez et activez l'environnement virtuel**
 
 ```bash
 uv venv
@@ -24,7 +45,7 @@ uv venv
 source .venv/bin/activate
 ```
 
-4. Installez les dépendances dans l'environnement virtuel
+5. **Installez les dépendances dans l'environnement virtuel**
 
 ```bash
 uv add -r requirements.txt
@@ -32,21 +53,19 @@ uv add -r requirements.txt
 
 NB : vous pouvez aussi utiliser `uv pip install -r requirements.txt` si `uv add` provoque une erreur
 
-5. Lancez l'API backend
+6. **Lancez l'API backend** (dans un premier terminal)
 
 ```bash
-python -m app.api.main
+uv run --active python app/api/main.py
 ```
 
-6. Lancez l'interface frontend
+7. **Lancez l'interface frontend** (dans un second terminal)
 
-Dans un autre terminal
-
-```bash	
-streamlit run app/client/main.py
+```bash
+uv run --active streamlit run app/client/main.py
 ```
 
-7. Accédez à l'application dans le navigateur : `http://localhost:8501`
+8. **Accédez à l'application dans le navigateur : `http://localhost:8501`**
 
 ## Fonctionnalités métier
 
@@ -182,7 +201,7 @@ streamlit run app/client/main.py
   - DW ≈ 2 : pas d'autocorrélation
   - DW < 2 : autocorrélation positive
   - DW > 2 : autocorrélation négative
-- **P-values des coefficients** : Significativité statistique (seuil : 0.05)
+- **P-values des coefficients** : Significativit�� statistique (seuil : 0.05)
 - **Intervalles de confiance à 95%** : Plage de valeurs plausibles pour les coefficients
 - **Différence R² train/validation** : Indicateur d'overfitting
 
@@ -233,7 +252,6 @@ Pour une description détaillée des concepts mathématiques et des formules uti
 
 
 
-
 - Graphiques :
 
 <img width="1281" height="447" alt="image" src="https://github.com/user-attachments/assets/2f757e73-b3da-4985-90a0-aabd29beb759" />
@@ -245,4 +263,3 @@ Pour une description détaillée des concepts mathématiques et des formules uti
 <img width="1279" height="843" alt="image" src="https://github.com/user-attachments/assets/082da289-11af-4ad5-a0ac-2da3d79fd5d2" />
 
 <img width="1242" height="428" alt="image" src="https://github.com/user-attachments/assets/750ca4cb-b09d-4243-b205-0876d16ae49b" />
-
