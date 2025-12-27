@@ -25,9 +25,9 @@ class Simulator:
     
     def _load_individual_closes(self) -> pd.DataFrame:
         """
-        Charge les prix de clôture de chaque actif pour l'analyse Markowitz.
+        Charge les prix de clôture de chaque actif.
         """
-        df_prix = self.extracteur.concat_multiple_df(self.requete.actifs, 
+        df_prix = self.extracteur.concat_multiple_closes_from_dataframes(self.requete.actifs, 
                                                     self.requete.date_debut, 
                                                     self.requete.date_fin)
         
@@ -40,7 +40,7 @@ class Simulator:
         """
 
         logger.info(f"Chargement des prix moyens pour les actifs: {self.requete.actifs} de {self.requete.date_debut} à {self.requete.date_fin} pour la simulation ...")
-        serie_prix_moyen = self.extracteur._fetch_average_close_and_volume(self.requete.actifs, self.requete.date_debut, self.requete.date_fin)["Prix_Moyen"]
+        serie_prix_moyen = self.extracteur._fetch_average_close_from_multiple_actifs(self.requete.actifs, self.requete.date_debut, self.requete.date_fin)
         return serie_prix_moyen
     
     def _get_empirical_risk_free_rate(self) -> float:
@@ -48,7 +48,7 @@ class Simulator:
         Calcul le taux sans risque à considérer pour le ratio de Sharpe
         Il s'agit de la moyenne arithmétique sur le nombre d'années de simulation d'un taux souverain americain (US T-Bonds) 
         """
-        df_prix_moyens_actif_sans_risque = self.extracteur.fetch_close_and_volume_actif(actif=cst.ACTIF_SANS_RISQUE, start=self.requete.date_debut, end=self.requete.date_fin)
+        df_prix_moyens_actif_sans_risque = self.extracteur.fetch_close_actif_main(actif=cst.ACTIF_SANS_RISQUE, start=self.requete.date_debut, end=self.requete.date_fin)
         rendements_journaliers = df_prix_moyens_actif_sans_risque[cst.ACTIF_SANS_RISQUE].pct_change().dropna()
         taux_sans_risque_moyen_annuel = rendements_journaliers.mean() * cst.NOMBRE_JOURS_BOURSE_AN
         return taux_sans_risque_moyen_annuel
@@ -233,10 +233,10 @@ class Simulator:
                                       bounds=contrainte_positivite_poids,
                                       constraints=contrainte_budget_poids)
             if resulat_optimal.success:
-                print("POIDS OPTIMAL ------------------- ")
-
                 poids_optimaux = resulat_optimal.x
-                print(poids_optimaux)
+                logger.info("POIDS OPTIMAL ------------------- ")
+
+                logger.info(poids_optimaux)
 
                 rendement_moyen = np.dot(poids_optimaux, rendements_moyens_actifs)
                 volatilite = self._get_portfolio_global_volatility(poids=poids_optimaux, matrice_covariance_actifs=matrice_covariance_actifs)
@@ -253,11 +253,9 @@ class Simulator:
             logger.warning("Frontière optimale vide. Aucun poids trouvé. Verifiez l'algorithme")
             return {}
         
-        print("FRONTIERE ---------------------- ")
-        print(ensemble_poids_optimaux_frontiere)
         resultats_optimaux_tangents = max(ensemble_poids_optimaux_frontiere, key=lambda ensemble: ensemble["ratio_sharpe"])
-        print("MAXIMUM ------------------------ ")
-        print(resultats_optimaux_tangents)
+        logger.info("MAXIMUM ------------------------ ")
+        logger.info(resultats_optimaux_tangents)
         assert isinstance(resultats_optimaux_tangents, dict)
 
         ratio_sharpe_optimal = resultats_optimaux_tangents["ratio_sharpe"]

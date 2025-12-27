@@ -6,10 +6,12 @@ services:
     container_name: optinvest_server
     restart: always
     ports:
-      - "8000:8000"
+     - "8000:8000"
     networks:
-      - optinvest_network
-  
+     - optinvest_network
+    volumes:
+     - ./.cache:/src/.cache
+
   optinvest_client:
     build:
       context: .
@@ -21,9 +23,9 @@ services:
     environment:
      - API_URL=http://optinvest_server:8000
     networks:
-      - optinvest_network
+     - optinvest_network
     depends_on:
-      - optinvest_server
+     - optinvest_server
 
 networks:
   optinvest_network:
