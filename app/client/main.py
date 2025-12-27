@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List, Tuple
 
 import streamlit as st
+from loguru import logger
 
 from app.api.schemas.prediction import PredictionResponse
 from app.api.schemas.simulation import SimulationRequest, SimulationResponse
@@ -41,10 +42,8 @@ class ClientApp:
                 actifs=[cst.INDICE_REF],
                 **api_simulation_request.model_dump(mode="json", exclude={"actifs"}))
             valeur_portefeuille_temps_indice_ref = self.api_manager.call_api_simulation(parametres_indice_ref).valeur_portefeuille_temps
-            print(" -------------- Paramètres de la simulation ACIM ---------------")
-            print(parametres_indice_ref.model_dump_json())
-            print("---------- Benchmark loaded in client main.py -------")
-            print(valeur_portefeuille_temps_indice_ref)
+            logger.info(" -------------- Paramètres de la simulation ACIM ---------------")
+            logger.info(parametres_indice_ref.model_dump_json())
 
             api_prediction_requete = self.user_interface._build_prediction_request(valeur_portefeuille_montant=donnees_simulation_portefeuille.valeur_portefeuille_montant,
                                                                                    valeur_portefeuille_temps=donnees_simulation_portefeuille.valeur_portefeuille_temps,
@@ -85,19 +84,6 @@ class ClientApp:
         #     donnees_prediction_portefeuille, 
         #     valeur_portefeuille_temps_indice_ref
         # )
-
-    # def executer_simulation(self) -> None:
-    #     """
-    #     Méthode alternative pour l'exécution de simulation (compatibilité).
-    #     """
-    #     if hasattr(st.session_state, 'donnees_portefeuille'):
-    #         self._afficher_resultats(
-    #             st.session_state.donnees_portefeuille,
-    #             st.session_state.serie_benchmark,
-    #             st.session_state.donnees_prediction,
-    #             st.session_state.parametres
-    #         )
-
 
 if __name__ == "__main__":
     user_interface = UserForm()

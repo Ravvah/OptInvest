@@ -79,9 +79,6 @@ class DashboardManager:
         valeur_portefeuille_temps_monde_serie = pd.Series(valeur_portefeuille_temps_monde, dtype=float)
         valeur_portefeuille_temps_monde_serie.index = pd.to_datetime(valeur_portefeuille_temps_monde_serie.index)
         
-        print(f"Portefeuille - Début: {valeur_portefeuille_temps_serie.iloc[0]:.2f}€, Fin: {valeur_portefeuille_temps_serie.iloc[-1]:.2f}€")
-        print(f"Benchmark - Début: {valeur_portefeuille_temps_monde_serie.iloc[0]:.2f}€, Fin: {valeur_portefeuille_temps_monde_serie.iloc[-1]:.2f}€")
-        
         fig = go.Figure()
         fig.add_trace(go.Scatter(
             x=valeur_portefeuille_temps_serie.index,
@@ -337,8 +334,6 @@ class DashboardManager:
 
         serie_poids = pd.Series(donnees_simulation.repartition_optimale_markowitz.repartition_actifs)
         df_repartition_optimale_markowitz = serie_poids.to_frame(name="Poids")
-        print(donnees_simulation.repartition_optimale_markowitz.repartition_actifs)
-        print(df_repartition_optimale_markowitz)
         st.write("Répartition optimale")
         st.dataframe(df_repartition_optimale_markowitz)
 

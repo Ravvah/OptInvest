@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from fastapi import APIRouter, status
+from loguru import logger
 
 from app.api.schemas.simulation import SimulationRequest, SimulationResponse
 from app.core.simulator import Simulator
@@ -40,5 +41,6 @@ async def simulate_portfolio_growth(parametres_requete: SimulationRequest) -> Si
         year=parametres_requete.date_debut.year + parametres_requete.duree_ans
     )
     simulateur_portefeuille = Simulator(requete=parametres_requete)
+    logger.info("--------- GET SIMULATION RESPONSE ----------")
     resultats_simulation = simulateur_portefeuille.simulate_portfolio_growth()
     return resultats_simulation
