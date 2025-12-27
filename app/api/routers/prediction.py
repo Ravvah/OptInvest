@@ -1,6 +1,6 @@
-from datetime import date, timedelta
 from fastapi import APIRouter, HTTPException, status
 import traceback
+from loguru import logger
 
 
 from app.api.schemas.prediction import PredictionRequest, PredictionResponse
@@ -42,7 +42,7 @@ async def predict_portfolio_future_growth(parametres_requete: PredictionRequest)
     
     try:
         predicteur_portefeuille = LinearModelPredictor(parametres_requete)
-        print("------------------------ GET PREDICTION RESPONSE")
+        logger.info("------ GET PREDICTION RESPONSE -------")
         resultats = predicteur_portefeuille._get_prediction_response()
         import math
         for k, v in resultats.model_dump().items():

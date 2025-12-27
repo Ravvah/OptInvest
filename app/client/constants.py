@@ -1,7 +1,13 @@
 from typing import Dict, List
 
-API_URL = "http://localhost:8000/api/simuler"
-API_PREDICTION_URL = "http://localhost:8000/api/predire"
+import os
+
+# For docker 
+API_BASE = os.getenv("API_URL", "http://localhost:8000")
+
+API_URL = f"{API_BASE}/api/simuler"
+API_PREDICTION_URL = f"{API_BASE}/api/predire"
+
 INDICE_REF = "ACIM"
 ACTIFS_AUTORISES: List[str] = [
     "AAPL", "MSFT", "AGGH", "TLT", "VWCE.DE", "SXR8.DE"
