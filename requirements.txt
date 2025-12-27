@@ -5,9 +5,7 @@ numpy
 requests
 yfinance
 streamlit
-scikit-learn
 python-dotenv
-xlsxwriter
 plotly
 reportlab
 statsmodels
