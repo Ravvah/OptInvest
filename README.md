@@ -127,11 +127,6 @@ uv run --active streamlit run app/client/main.py
 - **Streamlit** : Interface utilisateur interactive
 - **Plotly** : Visualisations graphiques interactives
 
-### Export et rapports
-- **ReportLab** : Génération de rapports PDF
-- **XlsxWriter** : Export des données en Excel
-- **kaleido** : Conversion des graphiques pour les rapports
-
 ## Architecture de l'application
 
 ### Modules principaux
@@ -209,31 +204,13 @@ uv run --active streamlit run app/client/main.py
 
 ## Points d'amélioration
 
-### Bugs connus
-- Bug d'exportation des données qui fait disparaître le dashboard sur l'UI, il faudra re-simuler pour le revoir
-
 ### Points métier
 - Support de plus d'actifs financiers au-delà des 6 actifs actuels
-- Implémentation des modèles prédictifs avancés (AR, ARMA, ARMA-GARCH)
+- Implémentation des modèles prédictifs avancés (ARIMA, ARMA-GARCH)
 
 ### Optimisation du portefeuille
 - Mieux estimer la matrice de covariance $\Sigma$ des rendements des actifs, la matrice de covariance empirique n'est pas robuste.
 
-### Packaging et déploiement
-- Containerisation avec Docker :
-  ```dockerfile
-  FROM python:3.11-slim
-  
-  WORKDIR /app
-  COPY requirements.txt .
-  RUN pip install --no-cache-dir -r requirements.txt
-  
-  COPY . .
-  
-  EXPOSE 8000 8501
-  
-  CMD ["sh", "-c", "python -m app.api.main & streamlit run app/client/main.py"]
-  ```
 
 ## Documentation mathématique
 
