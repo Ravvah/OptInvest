@@ -1,5 +1,8 @@
 # OptInvest 
 
+<img width="1811" height="965" alt="image" src="https://github.com/user-attachments/assets/932d8b5d-62f3-4555-a986-d398583e36f0" />
+
+
 ## Description
 
 OptInvest est une application d'analyse et de simulation de stratégies d'investissement sur les marchés financiers. Elle permet de comparer différentes approches d'investissement progressif (Dollar-Cost Averaging) et en une fois (Lump Sum), d'optimiser les allocations de portefeuille selon la théorie moderne de portefeuille (Markowitz), et de réaliser des prédictions statistiques.
